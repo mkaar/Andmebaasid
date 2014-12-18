@@ -1,5 +1,4 @@
 <?php
-include("navigation.php");
 include("database_connect.php");
 
 if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action"]) && $_GET["action"] == 'add'){
@@ -21,7 +20,10 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
 
 
     } else {
-        pg_query($con, "INSERT INTO tellimus ('tellimuse_seisundi_liik_kood', 'isik_id') VALUES (1, {$_SESSION["userId"]})");
+        $now = strtotime("today");
+        $date = date("Y-m-d", $now);
+        $makse_tahtaeg = date('Y-m-d', strtotime($date . ' + 1 day'));
+        pg_query($con, "INSERT INTO tellimus (tellimuse_seisundi_liik_kood, isik_id, esitamise_kuupaev, makse_tahtaeg) VALUES (1, {$_SESSION["userId"]}, NOW(), 'tomorrow'::timestamptz)");
         $result = pg_query_params($con, "SELECT tellimus_id FROM tellimus WHERE isik_id = $1 AND tellimuse_seisundi_liik_kood = 1", array($_SESSION["userId"]));
         $hinnaResult = pg_query_params($con, "SELECT hind FROM toode WHERE toode_id = $1", array($_GET["itemId"]));
         if (pg_num_rows($result) > 0) {
@@ -31,7 +33,7 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
             while ($row = pg_fetch_row($result)) {
                 $tellimusId = $row[0];
             }
-            while ($row = pg_fetch_row($result)) {
+            while ($row = pg_fetch_row($hinnaResult)) {
                 $hind = $row[0];
             }
             pg_query($con, "INSERT INTO ostutellimuse_rida VALUES ({$tellimusId}, {$_GET["itemId"]}, 1, {$hind})");
