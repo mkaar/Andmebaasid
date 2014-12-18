@@ -14,10 +14,10 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
         while ($row = pg_fetch_row($result)) {
             $tellimusId = $row[0];
         }
-        while ($row = pg_fetch_row($result)) {
-            $hind = $row[0];
+        while ($row1 = pg_fetch_row($hinnaResult)) {
+            $hind = $row1[0];
         }
-        pg_query($con, "INSERT INTO ostutellimuse_rida ('tellimus_id', 'toode_id', 'kogus', 'uhiku_hind') VALUES ({$tellimusId}, {$_GET["itemId"]}, 1, {$hind})");
+        pg_query($con, "INSERT INTO ostutellimuse_rida VALUES ({$tellimusId}, {$_GET["itemId"]}, 1, {$hind})");
 
 
     } else {
@@ -34,21 +34,21 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
             while ($row = pg_fetch_row($result)) {
                 $hind = $row[0];
             }
-            pg_query($con, "INSERT INTO ostutellimuse_rida ('tellimus_id', 'toode_id', 'kogus', 'uhiku_hind') VALUES ({$tellimusId}, {$_GET["itemId"]}, 1, {$hind})");
+            pg_query($con, "INSERT INTO ostutellimuse_rida VALUES ({$tellimusId}, {$_GET["itemId"]}, 1, {$hind})");
 
         }
 
     }
-    //header("Location: index.php?added=".itemId);
+    header("Location: index.php?added=".itemId);
 } elseif (isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action"]) && $_GET["action"] == 'remove'){
     $result = pg_query_params($con, "SELECT tellimus_id FROM tellimus WHERE isik_id = $1", array($_SESSION["userId"]));
     while ($row = pg_fetch_row($result)) {
         $tellimusId = $row[0];
     }
     pg_query_params($con, "DELETE FROM ostutellimuse_rida WHERE tellimus_id = $1 AND toode_id = $2", array($tellimusId, $_GET["itemId"]));
-    //header("Location: index.php?removed=".itemId);
+    header("Location: index.php?removed=".itemId);
 } else {
-    //header("Location: index.php?error=true");
+    header("Location: index.php?error=true");
 }
 
 ?>
