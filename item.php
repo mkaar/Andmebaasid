@@ -29,7 +29,7 @@
 
                 if(isset($_SESSION["username"])){
                 ?>
-                <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>" class="btn btn-success pull-right" role="button">Osta</a>
+                <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 <?php
                 }
                 $result = pg_query_params($con, 'SELECT toote_kategooria_nimetus FROM toote_kategooria WHERE toote_kategooria_kood = $1', array($array[$j][1]));

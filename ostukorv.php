@@ -58,7 +58,7 @@
 
 <h2>Tellimuse kogu hind on: €<?php echo $totalPrice?></h2>
 
-<a href="orderlogic.php" class="btn btn-success">Esita tellimus</a>
+<a href="orderpage.php" class="btn btn-success">Esita tellimus</a>
 </div>
 </body>
 </html>

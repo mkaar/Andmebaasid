@@ -15,6 +15,8 @@
 <div class="container">
     <?php
     include("navigation.php");
+    if(isset($_SESSION["username"]))
+        header("Location: index.php")
     ?>
 
     <div class="row">

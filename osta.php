@@ -16,8 +16,7 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
         while ($row1 = pg_fetch_row($hinnaResult)) {
             $hind = $row1[0];
         }
-        pg_query($con, "INSERT INTO ostutellimuse_rida VALUES ({$tellimusId}, {$_GET["itemId"]}, 1, {$hind})");
-
+        pg_query_params($con, "SELECT f_tee_ostutellimuse_rida($1, $2, CAST(1 AS SMALLINT))", array($tellimusId, $_GET["itemId"]));
 
     } else {
         $now = strtotime("today");
@@ -36,12 +35,12 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
             while ($row = pg_fetch_row($hinnaResult)) {
                 $hind = $row[0];
             }
-            pg_query($con, "INSERT INTO ostutellimuse_rida VALUES ({$tellimusId}, {$_GET["itemId"]}, 1, {$hind})");
+            pg_query_params($con, "SELECT f_tee_ostutellimuse_rida($1, $2, CAST(1 AS SMALLINT))", array($tellimusId, $_GET["itemId"]));
 
         }
 
     }
-    header("Location: index.php?added=".itemId);
+   header("Location: index.php?added=".itemId);
 } elseif (isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action"]) && $_GET["action"] == 'remove'){
     $result = pg_query_params($con, "SELECT tellimus_id FROM tellimus WHERE isik_id = $1", array($_SESSION["userId"]));
     while ($row = pg_fetch_row($result)) {
