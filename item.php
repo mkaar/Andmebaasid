@@ -27,10 +27,29 @@
             ">
                 <?php
 
-                if(isset($_SESSION["username"])){
-                ?>
-                <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                <?php
+                if(isset($_SESSION["username"])) {
+                    if ($_SESSION["mode"] == 'admin') {
+                        ?>
+                        <a href="edit.php?itemId=<?php echo $array[$j][0]; ?>" class="btn btn-success pull-right"
+                           role="button">Redigeeri toodet</a>
+                    <?php
+                    } else {
+                        $isInCart = pg_query_params($con, "SELECT * FROM ostutellimuse_rida WHERE toode_id=$1 AND tellimus_id = (SELECT tellimus_id FROM tellimus WHERE isik_id=$2 AND tellimuse_seisundi_liik_kood=1) ", array($array[$j][0], $_SESSION['userId']));
+                        $searchResult = pg_num_rows($isInCart);
+                        if($searchResult == 0) {
+                            ?>
+                            <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>"
+                               class="btn btn-success pull-right" role="button"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span></a>
+                        <?php
+                        } else {
+                        ?>
+                            <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>"
+                               class="btn btn-default disabled pull-right" role="button"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span></a>
+                        <?php
+                        }
+                    }
                 }
                 $result = pg_query_params($con, 'SELECT toote_kategooria_nimetus FROM toote_kategooria WHERE toote_kategooria_kood = $1', array($array[$j][1]));
                 while ($row = pg_fetch_row($result)) {

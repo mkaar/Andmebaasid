@@ -1,10 +1,14 @@
 <div class="container">
-<?php
+    <?php
     include("navigation.php");
 
     include("messages.php");
 
-    $result = pg_query($con, "SELECT * FROM toode WHERE toote_seisundi_liik_kood = 1");
+    if($_SESSION['mode'] != 'admin'){
+        header("Location: index.php");
+    }
+
+    $result = pg_query($con, "SELECT * FROM toode");
     if (!$result) {
         echo "An error occurred.\n";
         exit;
@@ -24,11 +28,11 @@
         ?>
         <div class="row">
             <?php
-                for($j = $i * $itemsPerPage; $j < $i * $itemsPerPage + $itemsPerPage; $j++) {
-                    if($j == $itemCount)
-                        break;
-                        include("item.php");
-                }
+            for($j = $i * $itemsPerPage; $j < $i * $itemsPerPage + $itemsPerPage; $j++) {
+                if($j == $itemCount)
+                    break;
+                include("item.php");
+            }
             ?>
         </div>
     <?php

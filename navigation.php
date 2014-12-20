@@ -1,15 +1,23 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: markoka
- * Date: 17.12.2014
- * Time: 22:07
- */
 include("database_connect.php");
 if(!isset($_SESSION)){
 	session_start();
 }
 ?>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Virtuaaltoodete E-pood</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<![endif]-->
+</head>
+<body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/vendor/jquery-1.10.2.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
 <nav class="navbar navbar-default" role="navigation" style="background-color: #dff0d8;">
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="navbar-header">
@@ -32,7 +40,7 @@ if(!isset($_SESSION)){
 		</form>
 		<ul class="nav navbar-nav navbar-right">
 			<?php
-				if(isset($_SESSION["username"])) {
+				if(isset($_SESSION["username"]) && $_SESSION['mode'] != "admin") {
 			?>
 				<li class="navbar-text">
 					<?php
@@ -49,6 +57,24 @@ if(!isset($_SESSION)){
 				</li>
 				<li>
 					<a href="ordered.php">Ostetud tooted <span class="badge"><?php echo $tooted?></span></a>
+				</li>
+			<?php
+				}
+				if(isset($_SESSION['mode'])) {
+					$mode = $_SESSION['mode'];
+				} else {
+					$mode = "";
+				}
+				if($mode  == "admin"){
+			?>
+				<li>
+					<a href="adminindex.php">Kõik tooted</a>
+				</li>
+				<li>
+					<a href="index.php">Kasutaja vaade</a>
+				</li>
+				<li>
+					<a href="archive.php">Arhiveeri(tud) tellimus(ed)</a>
 				</li>
 			<?php
 				}
