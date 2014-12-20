@@ -8,7 +8,7 @@
         echo("<script>location.href='index.php'</script>");
     }
 
-    $result = pg_query($con, "SELECT * FROM tellimus WHERE tellimuse_seisundi_liik_kood=5");
+    $result = pg_query($con, "SELECT * FROM arhiveeritud_tellimuse_detailvaade");
     if (!$result) {
         echo "An error occurred.\n";
         exit;
