@@ -17,7 +17,7 @@
     include("navigation.php");
     include("database_connect.php");
 
-    $result = pg_query($con, "SELECT * FROM toode WHERE toote_seisundi_liik_kood = 1 AND toote_kategooria_kood = 1");
+    $result = pg_query($con, "SELECT * FROM toote_eelvaade WHERE toote_kategooria_kood = 1");
     if (!$result) {
         echo "An error occurred.\n";
         exit;
