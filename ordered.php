@@ -16,7 +16,7 @@
     <?php
     include("navigation.php");
 
-    $result = pg_query_params($con, "SELECT o.toode_id FROM ostutellimuse_rida AS o WHERE o.tellimus_id = (SELECT t.tellimus_id FROM tellimus AS t WHERE isik_id=$1 AND (tellimuse_seisundi_liik_kood = 4 OR tellimuse_seisundi_liik_kood = 5) );", array($_SESSION["userId"]));
+    $result = pg_query_params($con, "SELECT t.tellimus_id FROM tellimus AS t WHERE isik_id=$1 AND (tellimuse_seisundi_liik_kood = 4 OR tellimuse_seisundi_liik_kood = 5);", array($_SESSION["userId"]));
     if (!$result) {
         echo "An error occurred.\n";
         exit;
@@ -31,9 +31,12 @@
     $totalPrice = 0;
 
     while($row = pg_fetch_row($result)){
-        $result2 = pg_query_params($con,"SELECT * FROM toode WHERE toode_id = $1", $row);
-        while ($row2 = pg_fetch_row($result2)) {
-            array_push($array, $row2);
+        $result3= pg_query($con, "SELECT o.toode_id FROM ostutellimuse_rida AS o WHERE o.tellimus_id = {$row[0]}");
+        while($row2 = pg_fetch_row($result3)) {
+            $result2 = pg_query_params($con, "SELECT * FROM toode WHERE toode_id = $1", $row2);
+            while ($row3 = pg_fetch_row($result2)) {
+                array_push($array, $row3);
+            }
         }
     }
 

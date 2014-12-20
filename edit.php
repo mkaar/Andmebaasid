@@ -3,7 +3,7 @@
     include("navigation.php");
     include("database_connect.php");
     if($_SESSION['mode'] != "admin"){
-        header("Location: index.php");
+        echo("<script>location.href='index.php'</script>");
     }
     $result = pg_query_params($con, "SELECT * FROM toode WHERE toode_id = $1", array($_GET['itemId']));
     $array = array();
@@ -13,7 +13,7 @@
 
     if(isset($_POST['name']) || isset($_POST['price']) || isset($_POST['description']) || isset($_POST['genre']) || isset($_POST['active']) || isset($_POST['link'])){
         pg_query($con, "UPDATE toode SET toote_kategooria_kood={$_POST['genre']}, toote_seisundi_liik_kood={$_POST['active']}, hind={$_POST['price']}, nimi='{$_POST['name']}', kirjeldus='{$_POST['description']}', allalaadimise_link='{$_POST['link']}' WHERE toode_id={$_GET['itemId']}");
-        header("Location: edit.php?itemId=".$_GET['itemId']);
+        echo("<script>location.href='edit.php?itemId=".$_GET['itemId']."'</script>");
     }
 ?>
     <div class="col-md-offset-2 col-md-8">

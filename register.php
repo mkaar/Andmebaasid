@@ -16,7 +16,7 @@
     <?php
     include("navigation.php");
     if(isset($_SESSION["username"]))
-        header("Location: index.php")
+        echo("<script>location.href='index.php'</script>")
     ?>
 
     <div class="row">
@@ -54,7 +54,7 @@
     // REGISTRATION LOGIC
     if(isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["password2"]) && isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["email"])) {
         if($_POST["password"] != $_POST["password2"]){
-            header("Location: register.php?error=passwordmismatch");
+            echo("<script>location.href='register.php?error=passwordmismatch'</script>");
         }
         pg_query($con, "INSERT INTO isik (kasutajanimi, eesnimi, perenimi, e_mail, parool) VALUES ('{$_POST["username"]}', '{$_POST["firstname"]}','{$_POST["lastname"]}','{$_POST["email"]}','{$_POST["password"]}')");
         $result = pg_query($con, "SELECT isik_id FROM isik WHERE kasutajanimi = '{$_POST["username"]}'");
@@ -62,7 +62,7 @@
             pg_query($con, "INSERT INTO klient (isik_id, kliendi_seisundi_liik_kood) VALUES ('{$row[0]}', 1)");
         }
 
-        header("Location: signin.php?registration=successful");
+        echo("<script>location.href='signin.php?registration=successful'</script>");
     }
 
     ?>

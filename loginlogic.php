@@ -12,9 +12,9 @@ if(isset($_POST['username']) && isset($_POST['password']))
             $_SESSION['userId'] = $row[1];
         }
 
-        header("Location: index.php");
+        echo("<script>location.href='index.php'</script>");
     } else {
-        header("Location: signin.php?error=true");
+        echo("<script>location.href='signin.php?error=true'</script>");
     }
 }
 

@@ -5,7 +5,7 @@
     include("messages.php");
 
     if($_SESSION['mode'] != 'admin'){
-        header("Location: index.php");
+        echo("<script>location.href='index.php'</script>");
     }
 
     if(isset($_GET['tellimusId'])){

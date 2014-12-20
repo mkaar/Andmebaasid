@@ -1,8 +1,8 @@
 <?php
-include("database_connect.php");
 if(!isset($_SESSION)){
 	session_start();
 }
+include("database_connect.php");
 ?>
 <html>
 <head>
@@ -45,10 +45,14 @@ if(!isset($_SESSION)){
 				<li class="navbar-text">
 					<?php
 						echo "<li class='navbar-text'>Tere ".$_SESSION["username"]."!</li>";
+						$tooted=0;
 						$result = pg_query_params($con, "SELECT o.toode_id FROM ostutellimuse_rida AS o WHERE o.tellimus_id = (SELECT t.tellimus_id FROM tellimus AS t WHERE isik_id=$1 AND tellimuse_seisundi_liik_kood = 1);", array($_SESSION["userId"]));
 						$ostukorv = pg_num_rows($result);
-						$result = pg_query_params($con, "SELECT o.toode_id FROM ostutellimuse_rida AS o WHERE o.tellimus_id = (SELECT t.tellimus_id FROM tellimus AS t WHERE isik_id=$1 AND (tellimuse_seisundi_liik_kood = 4 OR tellimuse_seisundi_liik_kood = 5));", array($_SESSION["userId"]));
-						$tooted = pg_num_rows($result);
+						$result = pg_query_params($con, "SELECT t.tellimus_id FROM tellimus AS t WHERE isik_id=$1 AND (tellimuse_seisundi_liik_kood = 4 OR tellimuse_seisundi_liik_kood = 5);", array($_SESSION["userId"]));
+						while($row = pg_fetch_row($result)){
+							$result2= pg_query($con, "SELECT o.toode_id FROM ostutellimuse_rida AS o WHERE o.tellimus_id = {$row[0]}");
+							$tooted += pg_num_rows($result2);
+						}
 
 					?>
 				</li>

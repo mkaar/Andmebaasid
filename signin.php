@@ -16,7 +16,7 @@
     <?php
     include("navigation.php");
     if(isset($_SESSION["username"]))
-        header("Location: index.php")
+        echo("<script>location.href='index.php'</script>")
     ?>
 
     <div class="row">

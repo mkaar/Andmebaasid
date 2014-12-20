@@ -20,10 +20,10 @@
                        role="button">Arhiveeri tellimus</a>
                 <?php
                 } else {
-                    header("Location: index.php");
+                    echo("<script>location.href='index.php'</script>");
                 }
             } else {
-                header("Location: index.php");
+                echo("<script>location.href='index.php'</script>");
             }
             ?>
         </li>
