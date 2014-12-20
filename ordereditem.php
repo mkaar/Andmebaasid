@@ -10,6 +10,21 @@
             echo $array[$j][6];
             ?>
         </li>
+        <li class="list-group-item">
+            <?php
+            function startsWith($haystack, $needle)
+            {
+                $length = strlen($needle);
+                return (substr($haystack, 0, $length) === $needle);
+            }
+
+            if(startsWith($array[$j][7], "http://")){
+                echo "Link: <a href='".$array[$j][7]."' target='_blank'>".$array[$j][7]."</a>";
+            } else {
+                echo "Link: <a href='http://".$array[$j][7]."' target='_blank'>".$array[$j][7]."</a>";
+            }
+            ?>
+        </li>
         <li class="list-group-item
                 <?php
         if($array[$j][1] == 1)
@@ -34,19 +49,6 @@
                     while($row = pg_fetch_row($result)){
                         $isInCart = pg_query_params($con, "SELECT * FROM ostutellimuse_rida WHERE toode_id=$1 AND tellimus_id = $2", array($array[$j][0], $row[0]));
                         $searchResult += pg_num_rows($isInCart);
-                    }
-                    if($searchResult == 0) {
-                        ?>
-                        <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>"
-                           class="btn btn-success pull-right" role="button"><span
-                                class="glyphicon glyphicon-shopping-cart"></span></a>
-                    <?php
-                    } else {
-                        ?>
-                        <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>"
-                           class="btn btn-default disabled pull-right" role="button"><span
-                                class="glyphicon glyphicon-shopping-cart"></span></a>
-                    <?php
                     }
                 }
             }

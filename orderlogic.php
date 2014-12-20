@@ -8,7 +8,7 @@
             $tellimuseId = $row[0];
         }
         pg_query($con, "SELECT f_taida_tellimus({$tellimuseId})");
-        echo("<script>location.href='Location: ordered.php?added=true'</script>");
+        echo("<script>location.href='ordered.php?added=true'</script>");
     } elseif ($_GET["action"] == "cancel"){
         $result = pg_query_params($con, "SELECT tellimus_id FROM tellimus WHERE isik_id=$1 AND tellimuse_seisundi_liik_kood = 1;", array($_SESSION["userId"]));
         while ($row = pg_fetch_row($result)) {

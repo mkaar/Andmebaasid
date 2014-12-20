@@ -40,7 +40,7 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
         }
 
     }
-    echo("<script>location.href='index.php?added=".$_GET['itemId']."'</script>");
+    //echo("<script>location.href='index.php?added=".$_GET['itemId']."'</script>");
 } elseif (isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action"]) && $_GET["action"] == 'remove'){
     $result = pg_query_params($con, "SELECT tellimus_id FROM tellimus WHERE isik_id = $1", array($_SESSION["userId"]));
     while ($row = pg_fetch_row($result)) {
@@ -49,7 +49,7 @@ if(isset($_GET["itemId"]) && isset($_SESSION["username"]) && isset($_GET["action
     pg_query_params($con, "DELETE FROM ostutellimuse_rida WHERE tellimus_id = $1 AND toode_id = $2", array($tellimusId, $_GET["itemId"]));
     echo("<script>location.href='index.php?removed=".$_GET['itemId']."'</script>");
 } else {
-    echo("<script>location.href='index.php?error=true'</script>");
+    //echo("<script>location.href='index.php?error=true'</script>");
 }
 
 ?>
