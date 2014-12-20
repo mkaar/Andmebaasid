@@ -48,7 +48,7 @@
                 if($j == $itemCount)
                     break;
                 $totalPrice += $array[$j][4];
-                include("item.php");
+                include("ordereditem.php");
             }
             ?>
         </div>

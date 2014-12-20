@@ -56,7 +56,7 @@
         if($_POST["password"] != $_POST["password2"]){
             echo("<script>location.href='register.php?error=passwordmismatch'</script>");
         }
-        pg_query($con, "INSERT INTO isik (kasutajanimi, eesnimi, perenimi, e_mail, parool) VALUES ('{$_POST["username"]}', '{$_POST["firstname"]}','{$_POST["lastname"]}','{$_POST["email"]}','{$_POST["password"]}')");
+        pg_query($con, "INSERT INTO isik (kasutajanimi, eesnimi, perenimi, e_mail, parool) VALUES ('{$_POST["username"]}', '{$_POST["firstname"]}','{$_POST["lastname"]}','{$_POST["email"]}',public.crypt('{$_POST["password"]}', public.gen_salt('bf',11)))");
         $result = pg_query($con, "SELECT isik_id FROM isik WHERE kasutajanimi = '{$_POST["username"]}'");
         while($row = pg_fetch_row($result)){
             pg_query($con, "INSERT INTO klient (isik_id, kliendi_seisundi_liik_kood) VALUES ('{$row[0]}', 1)");
@@ -64,7 +64,6 @@
 
         echo("<script>location.href='signin.php?registration=successful'</script>");
     }
-
     ?>
 
 </div>

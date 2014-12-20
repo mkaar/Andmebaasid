@@ -34,8 +34,12 @@
                            role="button">Redigeeri toodet</a>
                     <?php
                     } else {
-                        $isInCart = pg_query_params($con, "SELECT * FROM ostutellimuse_rida WHERE toode_id=$1 AND tellimus_id = (SELECT tellimus_id FROM tellimus WHERE isik_id=$2 AND tellimuse_seisundi_liik_kood=1) ", array($array[$j][0], $_SESSION['userId']));
-                        $searchResult = pg_num_rows($isInCart);
+                        $result = pg_query_params($con, "SELECT tellimus_id FROM tellimus WHERE isik_id=$1 AND tellimuse_seisundi_liik_kood <> 2", array($_SESSION['userId']));
+                        $searchResult = 0;
+                        while($row = pg_fetch_row($result)){
+                            $isInCart = pg_query_params($con, "SELECT * FROM ostutellimuse_rida WHERE toode_id=$1 AND tellimus_id = $2", array($array[$j][0], $row[0]));
+                            $searchResult += pg_num_rows($isInCart);
+                        }
                         if($searchResult == 0) {
                             ?>
                             <a href="osta.php?action=add&itemId=<?php echo $array[$j][0];?>"

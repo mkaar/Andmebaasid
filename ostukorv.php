@@ -37,12 +37,13 @@
         </div>
     <?php
     }
-
-
-
+    if($itemCount == 0){
     ?>
-
-<h2>Tellimuse kogu hind on: €<?php echo $totalPrice?></h2>
-
-<a href="orderpage.php" class="btn btn-success">Esita tellimus</a>
+        <h2>Teil ei ole ühtegi eset ostukorvis!</h2>
+    <?php } else { ?>
+    <h2>Tellimuse kogu hind on: €<?php echo $totalPrice?></h2>
+    <a href="orderpage.php" class="btn btn-success">Esita tellimus</a>
+    <?php
+}
+?>
 </div>

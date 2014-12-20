@@ -13,14 +13,12 @@
             echo "<h3>Tellimuse seisund: ".$array[$j][8]."</h3>";
             echo "<h3>Tellimuse kogu hind: ".$array[$j][9]."</h3>";
 
-            if(isset($_SESSION["username"])) {
-                if ($_SESSION["mode"] == 'admin') {
+            if(isset($_SESSION["username"]) && $_SESSION["mode"] == 'admin') {
+                if ($array[$j][8] == "Täidetud") {
                     ?>
                     <a href="archive.php?tellimusId=<?php echo $array[$j][0]; ?>" class="btn btn-success"
                        role="button">Arhiveeri tellimus</a>
                 <?php
-                } else {
-                    echo("<script>location.href='index.php'</script>");
                 }
             } else {
                 echo("<script>location.href='index.php'</script>");

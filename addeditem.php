@@ -12,8 +12,10 @@
         </li>
         <li class="list-group-item">
             <?php
-            $result = pg_query($con, "SELECT * FROM toode WHERE toote_seisundi_liik_kood = 1");
-            echo $array[$j][3];
+            $creator = pg_query_params($con, "SELECT kasutajanimi FROM isik WHERE isik_id = $1", array($array[$j][3]));
+            while($row = pg_fetch_row($creator)){
+                echo $row[0];
+            }
             ?>
         </li>
         <li class="list-group-item">
