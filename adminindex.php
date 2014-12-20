@@ -31,7 +31,7 @@
             for($j = $i * $itemsPerPage; $j < $i * $itemsPerPage + $itemsPerPage; $j++) {
                 if($j == $itemCount)
                     break;
-                include("item.php");
+                include("adminitem.php");
             }
             ?>
         </div>

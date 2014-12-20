@@ -3,23 +3,23 @@
             <li class="list-group-item">
                 <span class="label label-success pull-right">
                     <?php
-                    echo "€".$array[$j][4];
+                    echo "€".$array[$j][2];
                     ?>
                 </span>
                 <?php
-                echo "<h3>".$array[$j][5]."</h3>";
+                echo "<h3>".$array[$j][1]."</h3>";
                 ?>
             </li>
             <li class="list-group-item">
                 <?php
-                echo $array[$j][6];
+                echo $array[$j][3];
                 ?>
             </li>
             <li class="list-group-item
                 <?php
-                    if($array[$j][1] == 1)
+                    if($array[$j][4] == 1)
                         echo " list-group-item-success";
-                    elseif($array[$j][1] == 2)
+                    elseif($array[$j][4] == 2)
                         echo " list-group-item-info";
                     else
                         echo " list-group-item-warning";
@@ -55,7 +55,7 @@
                         }
                     }
                 }
-                $result = pg_query_params($con, 'SELECT toote_kategooria_nimetus FROM toote_kategooria WHERE toote_kategooria_kood = $1', array($array[$j][1]));
+                $result = pg_query_params($con, 'SELECT toote_kategooria_nimetus FROM toote_kategooria WHERE toote_kategooria_kood = $1', array($array[$j][4]));
                 while ($row = pg_fetch_row($result)) {
                     echo "<h5>".$row[0]."</h5>";
                 }
